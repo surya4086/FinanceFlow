@@ -1,0 +1,25 @@
+
+# Secrets
+.env
+.env.*
+!.env.example
+application-local.properties
+
+# Frontend
+client/node_modules/
+client/dist/
+
+# Backend
+server/finance-tracker/target/
+
+# IDE
+.idea/
+**/.idea/
+.vscode/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

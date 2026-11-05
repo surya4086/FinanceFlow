@@ -1,0 +1,20 @@
+# IDE folders
+.idea/
+**/.idea/
+.vscode/
+
+# Frontend
+client/node_modules/
+client/dist/
+
+# Backend
+server/finance-tracker/target/
+
+# Secrets
+.env
+.env.*
+!.env.example
+application-local.properties
+
+# Logs
+*.log
