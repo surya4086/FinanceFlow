@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import "./Login.css";
 
 export default function Login() {
-
   const { login, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -31,96 +30,120 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4">
+    <div className="auth-page">
+      <aside className="auth-brand">
+        <div className="auth-logo">
+          Finance<span>Flow</span>
+        </div>
 
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
-
-        <h1 className="text-3xl font-bold text-emerald-600 text-center">
-          FinanceFlow
-        </h1>
-
-        <p className="text-center text-slate-500 mt-2">
-          Welcome back! Sign in to continue.
-        </p>
-
-        {error && (
-          <p className="mt-5 rounded-lg bg-red-100 p-3 text-sm text-red-700">
-            {error}
+        <div>
+          <h1>Know where every rupee goes.</h1>
+          <p>
+            Track income, set a monthly budget and see your spending by
+            category in one place.
           </p>
-        )}
+        </div>
 
-        <form onSubmit={handleSubmit} className="mt-7 space-y-5">
-
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Email
-            </label>
-
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              required
-              className="w-full rounded-lg border border-slate-300 p-3 outline-none focus:border-emerald-500"
+        <div className="balance-card" aria-hidden="true">
+          <div className="label">Total balance</div>
+          <div className="amount">₹33,500</div>
+          <div className="delta">₹18,500 left in this month's budget</div>
+          <svg viewBox="0 0 300 64" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stopColor="#3ddc97" stopOpacity=".35" />
+                <stop offset="1" stopColor="#3ddc97" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M0 48 L40 42 L80 46 L120 30 L160 34 L200 18 L240 22 L300 6 L300 64 L0 64Z"
+              fill="url(#g)"
             />
+            <path
+              d="M0 48 L40 42 L80 46 L120 30 L160 34 L200 18 L240 22 L300 6"
+              fill="none"
+              stroke="#12503d"
+              strokeWidth="2.5"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+            />
+          </svg>
+          <div className="txn-row">
+            <div>
+              Monthly Salary<small>Income</small>
+            </div>
+            <b className="in">+₹35,000</b>
+          </div>
+          <div className="txn-row">
+            <div>
+              Groceries<small>Food</small>
+            </div>
+            <b className="out">−₹500</b>
+          </div>
+        </div>
+      </aside>
+
+      <main className="auth-form-wrap">
+        <form className="auth-form" onSubmit={handleSubmit} noValidate>
+          <h2>Welcome back</h2>
+          <p className="sub">Sign in to see your balance and recent activity.</p>
+
+          {error && (
+            <div className="form-error" role="alert">
+              {error}
+            </div>
+          )}
+
+          <div className="field">
+            <label htmlFor="email">Email</label>
+            <div className="input-box">
+              <input
+                id="email"
+                type="email"
+                autoComplete="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Password
-            </label>
-
-            <div className="relative">
+          <div className="field">
+            <label htmlFor="password">Password</label>
+            <div className="input-box">
               <input
+                id="password"
                 type={showPassword ? "text" : "password"}
+                autoComplete="current-password"
+                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
                 required
-                className="w-full rounded-lg border border-slate-300 p-3 pr-16 outline-none focus:border-emerald-500"
               />
-
               <button
                 type="button"
+                className="toggle"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-emerald-600"
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
             </div>
-
-            <div className="mt-2 text-right">
-              <Link
-                to="/forgot-password"
-                className="text-sm font-semibold text-emerald-600 hover:text-emerald-700"
-              >
-                Forgot Password?
-              </Link>
-            </div>
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-lg bg-emerald-600 py-3 font-semibold text-white hover:bg-emerald-700 disabled:opacity-50"
-          >
-            {loading ? "Signing in..." : "Login"}
+          <div className="row-between">
+            <Link to="/forgot-password">Forgot password?</Link>
+          </div>
+
+          <button type="submit" className="btn-primary" disabled={loading}>
+            {loading ? "Signing in..." : "Sign in"}
           </button>
 
+          <p className="switch">
+            New to FinanceFlow? <Link to="/register">Create an account</Link>
+          </p>
         </form>
-
-        <p className="mt-6 text-center text-sm text-slate-600">
-          Don't have an account?{" "}
-          <Link
-            to="/register"
-            className="font-semibold text-emerald-600"
-          >
-            Register
-          </Link>
-        </p>
-
-      </div>
+      </main>
     </div>
   );
 }
